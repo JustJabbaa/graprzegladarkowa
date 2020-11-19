@@ -1,25 +1,25 @@
 #prawo {
     right: 0px;
-    width:85%;
+    width:70%;
     height:100%;
     background-color:black;
     position:fixed;
 }
 #lewo {
     left: 0;
-    width: 15%;
+    width: 30%;
     height:100%;
     background-color:blue;
     position: fixed;
 }
 #gora {
-    height:20%;
+    height:30%;
     background-color: lightblue;
     width:100%;
 }
 #dol {
     left:0;
-    height: 80%;
+    height: 70%;
     bottom: 0px;
     width: 100%;
     background-color: lightgoldenrodyellow;
