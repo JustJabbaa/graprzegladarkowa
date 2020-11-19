@@ -26,14 +26,14 @@
 }
 .button {
     background-color: #008CBA;
-    border: none;
+    border: 2px solid lightblue;
     color: white;
     padding: 5px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 1px 0px;
+    margin: 0px 0px;
     transition-duration: 0.4s;
     cursor: pointer;
     width:100%;

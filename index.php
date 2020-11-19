@@ -59,7 +59,7 @@
             <div>
                 Surowiec: Ilość Surowca | Przychód/godzine | Nazwa i poziom budynku<br>
                 Drewno: <?php echo $v->showStorage("wood");?> | <?php echo $v->showHourGain("wood");?> | Drwal, poziom <?php echo $v->buildingLVL("woodcutter");?><br>
-                Kamień: <?php echo $v->showStorage("kamien");?> | <?php echo $v->showHourGain("kamien");?> | Kopalnia Kamienia, poziom <?php echo $v->buildingLVL("kopalniaKamienia");?><br>
+                Kamień: <?php echo $v->showStorage("stone");?> | <?php echo $v->showHourGain("stone");?> | Kopalnia Kamienia, poziom <?php echo $v->buildingLVL("stoneMine");?><br>
                 Żelazo: <?php echo $v->showStorage("iron");?> | <?php echo $v->showHourGain("iron");?> | Kopalnia Żelaza, poziom <?php echo $v->buildingLVL("ironMine");?><br>
 
             </div>
@@ -68,22 +68,33 @@
         <div id="dol">
             <p>
                 <a class="button" href="index.php?action=upgradeBuilding&building=woodcutter">Rozbuduj drwala</a>
-                <a class="button" href="index.php?action=upgradeBuilding&building=kopalniaKamienia">Kopalnia Kamieni</a>
+                <a class="button" href="index.php?action=upgradeBuilding&building=stoneMine">Kopalnia Kamieni</a>
                 <a class="button" href="index.php?action=upgradeBuilding&building=ironMine">Kopalnia Żelaza</a>
                 <a class="button" href="www.google.com">XD?</a>
                 <a class="button" href="www.google.com">XD?</a>
                 <a class="button" href="www.google.com">XD?</a>
-                <a class="button" href="www.google.com">XD?</a>
+                <a class="button" href="www.google.com">XD?</a> 
+                <a class="button" href="index.php">Odświerz strone</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Dropdown</button>
+                    <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+                </div>
+        </div>
             </p>
+
+           
             <div>Widok wioski</div>
             <div>Lista wojska</div>
-            <div>Wyloguj</div>
+            
             <footer class="row">
             <div class="col-12">
             <pre>
             <?php
-            var_dump($v);
-            var_dump($_REQUEST);
+            //var_dump($v);
+            //var_dump($_REQUEST);
             ?>
             </pre>
             </div>

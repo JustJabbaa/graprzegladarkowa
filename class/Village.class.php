@@ -11,12 +11,12 @@ class Village
             'townHall' => 1,
             'woodcutter' => 0,
             'ironMine' => 0,
-            'kopalniaKamienia' => 0,
+            'stoneMine' => 0,
         );
         $this->storage = array(
             'wood' => 200,
             'iron' => 0,
-            'kamien' => 0,
+            'stone' => 0,
         );
         $this->upgradeCost = array( //tablica wszystkich budynkow
             'woodcutter' => array(
@@ -28,30 +28,30 @@ class Village
                 ),
                 3 => array(
                     'wood' => 900,
-                    'kamien' => 50,
+                    'stone' => 50,
                 ),
                 4 => array(
                     'wood' => 7200,
-                    'kamien' => 250,
+                    'stone' => 250,
                     'iron' => 50
                 ),
                 5 => array(
                     'wood' => 72000,
-                    'kamien' => 1000,
+                    'stone' => 1000,
                     'iron' => 300,
                 )
             ),
-            'kopalniaKamienia' => array(
+            'stoneMine' => array(
                 1 => array(
                     'wood' => 600,
                 ),
                 2 => array(
                     'wood' => 3000,
-                    'kamien' => 150,
+                    'stone' => 150,
                 ),
                 3 => array(
                     'wood' =>20000,
-                    'kamien' => 4343,
+                    'stone' => 4343,
                 )
             ),
             'ironMine' => array(
@@ -83,10 +83,10 @@ class Village
         //zwracamy zysk w czasie $deltaTime
         return $perSecondGain * $deltaTime;
     }
-    private function kamienGain(int $deltaTime) : float
+    private function stoneGain(int $deltaTime) : float
     {
         //liczymy zysk na godzine z wzoru poziom_drwala ^ 2
-        $gain = $this->buildings['kopalniaKamienia']*2 * 5000;
+        $gain = $this->buildings['stoneMine']*2 * 5000;
         // liczymy zysk na sekunde (godzina/3600)
         $perSecondGain = $gain / 3600;
         //zwracamy zysk w czasie $deltaTime
@@ -96,7 +96,7 @@ class Village
     {
         $this->storage['wood'] += $this->woodGain($deltaTime);
         $this->storage['iron'] += $this->ironGain($deltaTime);
-        $this->storage['kamien'] += $this->kamienGain($deltaTime);
+        $this->storage['stone'] += $this->stoneGain($deltaTime);
     }
     public function upgradeBuilding(string $buildingName) : bool
     {
@@ -125,8 +125,8 @@ class Village
             case 'iron':
                 return $this->ironGain(3600);
             break;
-            case 'kamien':
-                return $this->kamienGain(3600);
+            case 'stone':
+                return $this->stoneGain(3600);
             break;
             default:
                 echo "Nie ma takiego surowca!";
@@ -148,7 +148,6 @@ class Village
     {
         return $this->buildings[$building];
     }
-    
     
 }
 ?>
