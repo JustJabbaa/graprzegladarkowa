@@ -1,12 +1,15 @@
 <?php
 class Village 
 {
+    private $gm;
     private $buildings;
     private $storage;
     private $upgradeCost;
 
-    public function __construct()
+    public function __construct($gameManger)
     {
+        $this->gm = $gameManger;
+        $this->log('Utworzono nową wioskę', 'info');
         $this->buildings = array(
             'townHall' => 1,
             'woodcutter' => 0,
@@ -19,56 +22,69 @@ class Village
             'stone' => 0,
         );
         $this->upgradeCost = array( //tablica wszystkich budynkow
-            'woodcutter' => array(
-                1 => array(
-                    'wood' => 200
+                'woodcutter' => array(
+                    1 => array(
+                        'wood' => 50
+                    ),
+                    2 => array(
+                        'wood' => 250,
+                    ),
+                    3 => array(
+                        'wood' => 1500,
+                        'stone' => 500,
+                    ),
+                    4 => array(
+                        'wood' => 12000,
+                        'stone' => 250,
+                        'iron' => 50
+                    ),
+                    5 => array(
+                        'wood' => 72000,
+                        'stone' => 1000,
+                        'iron' => 300,
+                    )
                 ),
-                2 => array(
-                    'wood' => 150,
+                'stoneMine' => array(
+                    1 => array(
+                        'wood' => 1000,
+                    ),
+                    2 => array(
+                        'wood' => 3000,
+                        'stone' => 1000,
+                    ),
+                    3 => array(
+                        'wood' =>14000,
+                        'stone' => 700,
+                        'iron' => 250
+                    ),
+                    4 => array(
+                        'wood' => 40000,
+                        'stone' => 2000,
+                        'iron' => 500,
+                    ),
+                    5 => array(
+                        'wood' => 120000,
+                        'stone' => 10000,
+                        'iron' => 2000,
+                    )
                 ),
-                3 => array(
-                    'wood' => 900,
-                    'stone' => 50,
+                'ironMine' => array(
+                    1 => array(
+                        'wood' => 100,
+                    ),
+                    2 => array(
+                        'wood' => 300,
+                        'iron' => 100,
+                    )
                 ),
-                4 => array(
-                    'wood' => 7200,
-                    'stone' => 250,
-                    'iron' => 50
-                ),
-                5 => array(
-                    'wood' => 72000,
-                    'stone' => 1000,
-                    'iron' => 300,
-                )
-            ),
-            'stoneMine' => array(
-                1 => array(
-                    'wood' => 600,
-                ),
-                2 => array(
-                    'wood' => 3000,
-                    'stone' => 150,
-                ),
-                3 => array(
-                    'wood' =>20000,
-                    'stone' => 4343,
-                )
-            ),
-            'ironMine' => array(
-                1 => array(
-                    'wood' => 100,
-                ),
-                2 => array(
-                    'wood' => 300,
-                    'iron' => 100,
-                )
-            ),
+        
+
         );
     }
     private function woodGain(int $deltaTime) : float
     {
         //liczymy zysk na godzine z wzoru poziom_drwala ^ 2
-        $gain = $this->buildings['woodcutter']* 2 * 1500 ;
+        $gain = $this->buildings['woodcutter']* 2 * 750 ;
         // liczymy zysk na sekunde (godzina/3600)
         $perSecondGain = $gain / 3600;
         //zwracamy zysk w czasie $deltaTime
@@ -77,7 +93,7 @@ class Village
     private function ironGain(int $deltaTime) : float
     {
         //liczymy zysk na godzine z wzoru poziom_drwala ^ 2
-        $gain = $this->buildings['ironMine']*2 * 5000;
+        $gain = $this->buildings['ironMine']*2 * 125;
         // liczymy zysk na sekunde (godzina/3600)
         $perSecondGain = $gain / 3600;
         //zwracamy zysk w czasie $deltaTime
@@ -86,7 +102,7 @@ class Village
     private function stoneGain(int $deltaTime) : float
     {
         //liczymy zysk na godzine z wzoru poziom_drwala ^ 2
-        $gain = $this->buildings['stoneMine']*2 * 5000;
+        $gain = $this->buildings['stoneMine']*2 * 500;
         // liczymy zysk na sekunde (godzina/3600)
         $perSecondGain = $gain / 3600;
         //zwracamy zysk w czasie $deltaTime
@@ -114,6 +130,18 @@ class Village
         }
         //podnies lvl budynku o 1
         $this->buildings[$buildingName] += 1; 
+        return true;
+    }
+    public function checkBuildingUpgrade(string $buildingName) : bool
+    {
+        $currentLVL = $this->buildings[$buildingName];
+        $cost = $this->upgradeCost[$buildingName][$currentLVL+1];
+        foreach ($cost as $key => $value) {
+            //key - nazwa surowca
+            //value koszt surowca
+            if($value > $this->storage[$key])
+                return false;
+        }
         return true;
     }
     public function showHourGain(string $resource) : string
@@ -148,6 +176,24 @@ class Village
     {
         return $this->buildings[$building];
     }
-    
+    public function capacity(string $resource) : int 
+    {
+        switch ($resource) {
+            case 'wood':
+                return $this->woodGain(60*60*24); //doba
+                break;
+            case 'iron':
+                return $this->ironGain(60*60*12); //12 godzin
+                break;
+                
+            default:
+                return 0;
+                break;
+        }
+    }
+    public function log(string $message, string $type)
+    {
+        $this->gm->l->log($message, 'village', $type);
+    }
 }
 ?>
