@@ -23,7 +23,13 @@ require_once('./class/GameManager.class.php');
                 default:
                     $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
             }
-        } 
+        }
+
+
+
+
+        
+        
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -93,7 +99,7 @@ require_once('./class/GameManager.class.php');
             <div class="col-12">
             <pre>
             <?php
-            //var_dump($)
+            //var_dump($v);
             //var_dump($_REQUEST);
             ?>
             </pre>
