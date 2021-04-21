@@ -18,26 +18,12 @@ require_once('./class/GameManager.class.php');
             switch($_REQUEST['action'])
             {
                 case 'upgradeBuilding':
-                    if($v->upgradeBuilding($_REQUEST['building']))
-                    {
-                        echo "Ulepszono budynek: ".$_REQUEST['building'];
-                    }
-                    else
-                    {
-                        echo "Nie udało się ulepszyć budynku: ".$_REQUEST['building'];
-                    }
-                    
+                    $v->upgradeBuilding($_REQUEST['building']);
                 break;
                 default:
-                    echo 'Nieprawidłowa zmienna "action"';
+                    $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
             }
-        }
-
-
-
-
-        
-        
+        } 
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,7 +93,7 @@ require_once('./class/GameManager.class.php');
             <div class="col-12">
             <pre>
             <?php
-            //var_dump($v);
+            //var_dump($)
             //var_dump($_REQUEST);
             ?>
             </pre>
