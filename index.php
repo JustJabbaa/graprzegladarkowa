@@ -20,6 +20,34 @@ require_once('./class/GameManager.class.php');
                 case 'upgradeBuilding':
                     $v->upgradeBuilding($_REQUEST['building']);
                 break;
+                case 'townHall':
+                    $buildingList = $v ->buildingList();
+                  $mainContent = "<table class=\"table table-bordered\">";
+                  $mainContent .= "<tr><th>Nazwa budynku</th><th>Poziom budynku</th><th>Koszt ulepszenia</th><th>Rozbudowa</th></tr>";
+                  foreach($buildingList as $index => $building)
+                  {
+                      $name = $building['buildingName'];
+                      $level = $building['buildingName'];
+                      $upgradeCost = "";
+                      foreach($building['upgradeCost'] as $resource => $cost)
+                      {
+                       $upgradeCost .= "$resource: $cost,";
+                      }
+                      
+                      $mainContent .="<tr><td>$name</td><td>$level</td><td>$upgradeCost</td></tr>";
+                      if($v->checkBuildingUpgrade($name))
+                      $mainContent .= 
+                     "<td><a href=\"index.php?action=upgradeBuilding&building=$name\">
+                     <button>Rozbuduj</button> </a></td>";
+                     else 
+                    $mainContent .="<td> </td>";
+                    $mainContent .="</tr>";
+                  }
+
+
+                  $mainContent .= "</table>";
+                  $mainContent .= "<a href=\index.php\">Powrót</a>";
+                  break;
                 default:
                     $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
             }
@@ -92,8 +120,18 @@ require_once('./class/GameManager.class.php');
             </p>
 
            
-            <div>Widok wioski</div>
-            <div>Lista wojska</div>
+            <div>
+            <?php if(isset($mainContent)) : 
+                echo $mainContent; ?>
+            <?php else : ?>
+            Widok wioski
+            <?php endif; ?>
+            <br>
+            <a href="index.php?action=townHall">Ratusz</a>
+            </div>
+            <div>
+            Lista wojska
+            </div>
             
             <footer class="row">
             <div class="col-12">
