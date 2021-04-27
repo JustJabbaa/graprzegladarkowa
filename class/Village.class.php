@@ -92,7 +92,19 @@ class Village
              $building['upgradeCost'] = $this->upgradeCost[$buildingName][$buildingLVL+1];
          else 
              $building['upgradeCost'] = array();
-           array_push($buildingList, $building);
+                switch($buildingName) {
+                    case 'woodcutter' :
+                        $building['HourGain'] = $this->woodGain(60*60);
+                        $building['capacity'] = $this->capacity('wood');
+             break;
+             case 'IronMine'
+                         $building['HourGain'] = $this->ironGain(60*60);
+                        $building['capacity'] = $this->capacity('iron');
+                        break;
+            
+                    }
+          
+                    array_push($buildingList, $building);
 
         }
         return $buildingList;

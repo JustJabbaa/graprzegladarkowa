@@ -23,7 +23,8 @@ require_once('./class/GameManager.class.php');
                 case 'townHall':
                     $buildingList = $v ->buildingList();
                   $mainContent = "<table class=\"table table-bordered\">";
-                  $mainContent .= "<tr><th>Nazwa budynku</th><th>Poziom budynku</th><th>Koszt ulepszenia</th><th>Rozbudowa</th></tr>";
+                  $mainContent .= "<tr><th>Nazwa budynku</th><th>Poziom budynku</th>
+                                <th>Produkcja/h / pojemność</th><th>Koszt ulepszenia</th><th>Rozbudowa</th></tr>";
                   foreach($buildingList as $index => $building)
                   {
                       $name = $building['buildingName'];
@@ -34,7 +35,18 @@ require_once('./class/GameManager.class.php');
                        $upgradeCost .= "$resource: $cost,";
                       }
                       
-                      $mainContent .="<tr><td>$name</td><td>$level</td><td>$upgradeCost</td></tr>";
+                      $mainContent .="<tr><td>$name</td><td>$level</td><td>";
+                      if(isset($building['capacity']))
+                      {
+                            $gain = $building['hourGain'];
+                            $cap = $building['capacity'];
+                            $mainContent .="<td>$gain / $cap</td>";   
+                      }
+                      else
+                      {
+                        $mainContent .="<td></td>"; 
+                      }
+                      $mainContent .="</td><td>$upgradeCost</td></tr>";
                       if($v->checkBuildingUpgrade($name))
                       $mainContent .= 
                      "<td><a href=\"index.php?action=upgradeBuilding&building=$name\">
