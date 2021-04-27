@@ -97,7 +97,7 @@ class Village
                         $building['HourGain'] = $this->woodGain(60*60);
                         $building['capacity'] = $this->capacity('wood');
              break;
-             case 'IronMine'
+             case 'IronMine':
                          $building['HourGain'] = $this->ironGain(60*60);
                         $building['capacity'] = $this->capacity('iron');
                         break;
@@ -161,13 +161,13 @@ class Village
             $this->storage[$key] -= $value;
         }
         //odwołanie do schedulera
-        $this->gm->s->add(time()+300, 'Village' , 'scheduledBuldingUpgrade' , $buildingName);
+        $this->gm->s->add(time()+300, 'Village' , 'scheduledBuildingUpgrade' , $buildingName);
         return true;
     }
-    public function scheduledBuildingUpgrade(string $buildingName);
+    public function scheduledBuildingUpgrade(string $buildingName)
     {
         //podnies lvl budynku o 1
-        $this-buildings[$buildingName] += 1;
+        $this->buildings[$buildingName] += 1;
         $this->log("Ulepszono budynek: ".$buildingName, "Info");
     }
     public function checkBuildingUpgrade(string $buildingName) : bool

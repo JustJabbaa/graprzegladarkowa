@@ -27,8 +27,9 @@ class GameManager
        $this->s->check($this->t);
 
         //na koniec
-        $this->v->gain($this->deltaTime());
+        
         $this->t = time();
+        $this->v->gain($this->deltaTime());
     }
 }
 ?>

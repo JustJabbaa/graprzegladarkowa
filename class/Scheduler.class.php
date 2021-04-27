@@ -16,15 +16,15 @@ class Scheduler
         $task = array('timestamp' => $t,
                         'class' => $c,
                         'function' => $f,
-                        'param' => $p;
-        array_push($this->$schedule, $task)
-        $this->log('dodano do schedulera nową pozycję'), 'info');
+                        'param' => $p);
+        array_push($schedule);
+        $this->log('dodano do schedulera nową pozycję', 'info');
     }
 
     public function check($timestamp)
     {
         $todo = array();
-        $this->log('kompletuje listę zaległych rzeczy do zrobienia'), 'info');
+        $this->log('kompletuje listę zaległych rzeczy do zrobienia', 'info');
         foreach($this->schedule as$task)
     {
             if($task['timestamp'] >= $timestamp && $timestamp >= time())
@@ -48,7 +48,7 @@ class Scheduler
                 $funtionName = $task['funtion'];
                 $param = $task['param'];
                 $this->gm->v->{$funtionName}($param);
-                $this->log("wywołuje funkcję $funtionName dla klasy $className z parametrem $parem", 'info');
+                $this->log("wywołuje funkcję $funtionName dla klasy $className z parametrem $param", 'info');
                 $this->gm->v->gain($task['timestamp'] - $this->gm->t);
                 $this->log("synchronizuje surowce w wiosce", 'info');
                 $this->gm->t = $task['timestamp'];
@@ -58,9 +58,9 @@ class Scheduler
     }
     public function log(string $message, string $type)
     {
-        $this->gm-l->log($message, 'scheduler', $type);
+        $this->gm->l->log($message, 'scheduler', $type);
     }
 
 
-
+}
 ?>
