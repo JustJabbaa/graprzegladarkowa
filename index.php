@@ -66,7 +66,7 @@ require_once('./class/GameManager.class.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <link rel="stylesheet" href="hud.css">
+    <link rel="stylesheet" href="hudtest.css">
 </head>
 <body>
     <div id="lewo">
@@ -82,14 +82,14 @@ require_once('./class/GameManager.class.php');
         
         <div id="dol">
             <p>
-                <a class="button" href="index.php?action=upgradeBuilding&building=woodcutter">Rozbuduj drwala</a>
-                <a class="button" href="index.php?action=upgradeBuilding&building=stoneMine">Ulepsz Kopalnie Kamieni</a>
-                <a class="button" href="index.php?action=upgradeBuilding&building=ironMine">Ulepsz Kopalnie Żelaza</a>
-                <a class="button" href="www.google.com">.</a>
-                <a class="button" href="www.google.com">.</a>
-                <a class="button" href="www.google.com">.</a>
-                <a class="button" href="www.google.com">.</a> 
-                <a class="button" href="index.php">Odśwież strone</a>
+                <a class="button" href="index.php?action=upgradeBuilding&building=woodcutter">Rozbuduj drwala</a><br>
+                <a class="button" href="index.php?action=upgradeBuilding&building=stoneMine">Ulepsz Kopalnie Kamieni</a><br>
+                <a class="button" href="index.php?action=upgradeBuilding&building=ironMine">Ulepsz Kopalnie Żelaza</a><br>
+                <a class="button" href="www.google.com">.</a><br>
+                <a class="button" href="www.google.com">.</a><br>
+                <a class="button" href="www.google.com">.</a><br>
+                <a class="button" href="www.google.com">.</a> <br>
+                <a class="button" href="index.php">Odśwież strone</a><br>
                 <footer class="row">
             <div class="col-12">
             <table class="table table-bordered">
@@ -145,7 +145,7 @@ require_once('./class/GameManager.class.php');
         </footer>
         </div>
     </div>
-    <div id="prawo"><img src="grafika.jpg" style="width:100%;height:100%"></div>
+    
     <div></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
