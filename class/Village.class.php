@@ -160,10 +160,15 @@ class Village
             //odejmujemy surowce na budynek
             $this->storage[$key] -= $value;
         }
-        //podnies lvl budynku o 1
-        $this->buildings[$buildingName] += 1;
-        $this->log("ulepszono budynek: ".$buildingName, "info"); 
+        //odwołanie do schedulera
+        $this->gm->s->add(time()+300, 'Village' , 'scheduledBuldingUpgrade' , $buildingName);
         return true;
+    }
+    public function scheduledBuildingUpgrade(string $buildingName);
+    {
+        //podnies lvl budynku o 1
+        $this-buildings[$buildingName] += 1;
+        $this->log("Ulepszono budynek: ".$buildingName, "Info");
     }
     public function checkBuildingUpgrade(string $buildingName) : bool
     {
