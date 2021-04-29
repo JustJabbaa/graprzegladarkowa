@@ -31,6 +31,7 @@ require_once('./class/GameManager.class.php');
                     {
                         $count = $_REQUEST['archer']; 
                         $gm->newArmy(0, $count, 0, $v);
+                    }    
 
                         if(isset($_REQUEST['cavalry'])) 
                         {
