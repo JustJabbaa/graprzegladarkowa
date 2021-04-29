@@ -38,6 +38,7 @@ require_once('./class/GameManager.class.php');
                         }
                         require('view/townSquare.php');
                         break;
+                    }
                 case 'townHall':
                     require('view/townHall.php');
                   break;
