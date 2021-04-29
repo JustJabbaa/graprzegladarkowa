@@ -11,7 +11,6 @@ require_once('./class/GameManager.class.php');
             $gm = $_SESSION['gm'];
         }
         $v = $gm->v; //neizależnie cyz nowa gra czy załadowana
-        $v = $gm->v; //niezależnie czy nowa gra czy załadowana
         $gm->sync(); //przelicz surowce
         
         if(isset($_REQUEST['action'])) 
@@ -26,36 +25,36 @@ require_once('./class/GameManager.class.php');
                   $mainContent = "<table class=\"table table-bordered\">";
                   $mainContent .= "<tr><th>Nazwa budynku</th><th>Poziom budynku</th>
                                 <th>Produkcja/h / pojemność</th><th>Koszt ulepszenia</th><th>Rozbudowa</th></tr>";
-                  foreach($buildingList as $index => $building)
-                  {
-                      $name = $building['buildingName'];
-                      $level = $building['buildingName'];
-                      $upgradeCost = "";
-                      foreach($building['upgradeCost'] as $resource => $cost)
-                      {
-                       $upgradeCost .= "$resource: $cost,";
-                      }
-                      
-                      $mainContent .="<tr><td>$name</td><td>$level</td><td>";
-                      if(isset($building['capacity']))
-                      {
-                            $gain = $building['hourGain'];
-                            $cap = $building['capacity'];
-                            $mainContent .="<td>$gain / $cap</td>";   
-                      }
-                      else
-                      {
-                        $mainContent .="<td></td>"; 
-                      }
-                      $mainContent .="</td><td>$upgradeCost</td></tr>";
-                      if($v->checkBuildingUpgrade($name))
-                      $mainContent .= 
-                     "<td><a href=\"index.php?action=upgradeBuilding&building=$name\">
-                     <button>Rozbuduj</button> </a></td>";
-                     else 
-                    $mainContent .="<td> </td>";
-                    $mainContent .="</tr>";
-                  }
+                        foreach($buildingList as $index => $building) 
+                        {
+                            $name = $building['buildingName'];
+                            $level = $building['buildingLVL'];
+                            $upgradeCost = "";
+                            foreach($building['upgradeCost'] as $resource => $cost)
+                            {
+                                $upgradeCost .= "$resource: $cost,";
+                            }
+                            $mainContent .="<tr><td>$name</td><td>$level</td>";
+                            if(isset($building['capacity']))
+                            {
+                                $gain = $building['HourGain'];
+                                $cap = $building['capacity'];
+                                $mainContent .="<td>$gain / $cap</td>";
+                            }
+                            else 
+                            {
+                                $mainContent .="<td></td>";
+                            }
+                            $mainContent .="<td>$upgradeCost</td>";
+                            if($v->checkBuildingUpgrade($name))
+                            $mainContent .= 
+                            "<td><a href=\"index.php?action=upgradeBuilding&building=$name\">
+                            <button>Rozbuduj</button>
+                            </a></td>";
+                            else
+                             $mainContent .= "<td></td>";
+                        $mainContent .="</tr>";
+                    }
                   $mainContent .= "</table>";
                     $mainContent .= "<h3>Aktywne budowy:</h3>";
                     $tasks = $gm->s->getTasksByFunction("scheduledBuildingUpgrade"); //znajdz na liscie zadan wszystie dotyczace rozbudoqwy budynków
@@ -68,7 +67,7 @@ require_once('./class/GameManager.class.php');
 
 
                   $mainContent .= "</table>";
-                  $mainContent .= "<a href=\index.php\">Powrót</a>";
+                  $mainContent .= "<a href=index.php>Powrót</a>";
                   break;
                 default:
                     $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
@@ -91,8 +90,8 @@ require_once('./class/GameManager.class.php');
     <link rel="stylesheet" href="hudtest.css">
 </head>
 <body>
-    <div id="lewo">
-        <div id="gora">
+    <div>
+        <div>
             <div>
                 Surowiec: Ilość Surowca | Przychód/godzine | Nazwa i poziom budynku<br>
                 Drewno: <?php echo $v->showStorage("wood");?> | <?php echo $v->showHourGain("wood");?> | Drwal, poziom <?php echo $v->buildingLVL("woodcutter");?><br>
@@ -102,17 +101,19 @@ require_once('./class/GameManager.class.php');
             </div>
         </div>
         
-        <div id="dol">
-            <p>
-                <a class="button" href="index.php?action=upgradeBuilding&building=woodcutter">Rozbuduj drwala</a><br>
-                <a class="button" href="index.php?action=upgradeBuilding&building=stoneMine">Ulepsz Kopalnie Kamieni</a><br>
-                <a class="button" href="index.php?action=upgradeBuilding&building=ironMine">Ulepsz Kopalnie Żelaza</a><br>
-                <a class="button" href="www.google.com">.</a><br>
-                <a class="button" href="www.google.com">.</a><br>
-                <a class="button" href="www.google.com">.</a><br>
-                <a class="button" href="www.google.com">.</a> <br>
-                <a class="button" href="index.php">Odśwież strone</a><br>
-                <footer class="row">
+        <div> 
+        <div>
+            <?php if(isset($mainContent)) : 
+                echo $mainContent; ?>
+            <?php else : ?>
+            Widok wioski
+            <?php endif; ?>
+            <br>
+            <a href="index.php?action=townHall">Ratusz</a>
+            </div>
+            <div>
+            Lista wojska
+            </div>
             <div class="col-12">
             <table class="table table-bordered">
             <?php
@@ -142,18 +143,7 @@ require_once('./class/GameManager.class.php');
             </p>
 
            
-            <div>
-            <?php if(isset($mainContent)) : 
-                echo $mainContent; ?>
-            <?php else : ?>
-            Widok wioski
-            <?php endif; ?>
-            <br>
-            <a href="index.php?action=townHall">Ratusz</a>
-            </div>
-            <div>
-            Lista wojska
-            </div>
+           
             
             <footer class="row">
             <div class="col-12">

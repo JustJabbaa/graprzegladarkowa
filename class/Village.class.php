@@ -27,7 +27,7 @@ class Village
                         'wood' => 50
                     ),
                     2 => array(
-                        'wood' => 250,
+                        'wood' => 200,
                     ),
                     3 => array(
                         'wood' => 1500,
@@ -97,11 +97,14 @@ class Village
                         $building['HourGain'] = $this->woodGain(60*60);
                         $building['capacity'] = $this->capacity('wood');
              break;
-             case 'IronMine':
+             case 'ironMine':
                          $building['HourGain'] = $this->ironGain(60*60);
                         $building['capacity'] = $this->capacity('iron');
                         break;
-            
+            case 'stoneMine':
+                $building['HourGain'] = $this->stoneGain(60*60);
+                $building['capacity'] = $this->capacity('stone');
+            break;
                     }
           
                     array_push($buildingList, $building);

@@ -65,16 +65,7 @@
             </div>
         </div>
         
-        <div id="dol">
-            <p>
-                <a class="button" href="index.php?action=upgradeBuilding&building=woodcutter">Rozbuduj drwala</a>
-                <a class="button" href="index.php?action=upgradeBuilding&building=kopalniaKamienia">Kopalnia Kamieni</a>
-                <a class="button" href="index.php?action=upgradeBuilding&building=ironMine">Kopalnia Żelaza</a>
-                <a class="button" href="www.google.com">XD?</a>
-                <a class="button" href="www.google.com">XD?</a>
-                <a class="button" href="www.google.com">XD?</a>
-                <a class="button" href="www.google.com">XD?</a>
-            </p>
+        <div>
             <div>Widok wioski</div>
             <div>Lista wojska</div>
             <div>Wyloguj</div>

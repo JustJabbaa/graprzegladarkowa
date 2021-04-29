@@ -6,16 +6,16 @@ class Scheduler
 
     public function __construct($gameManager) {
         $this->schedule = array();
-
+        
         $this->gm = $gameManager;
         $this->log('utworzono schedulera', 'info');
     }
 
-    public function add($t, $c, $f, $p)
+    public function add($t, $c, $f, $p) 
     {
-        $task = array('timestamp' => $t,
-                        'class' => $c,
-                        'function' => $f,
+        $task = array('timestamp' => $t, 
+                        'class' => $c, 
+                        'function' => $f, 
                         'param' => $p);
         array_push($this->schedule, $task);
         $this->log('dodano do schedulera nową pozycję', 'info');
@@ -25,49 +25,49 @@ class Scheduler
     {
         /*
         $todo = array();
-        $this->log('kompletuje listę zaległych rzeczy do zrobienia', 'info');
-        foreach($this->schedule as$task)
-    {
-            if($task['timestamp'] >= $timestamp && $timestamp >= time())
+        $this->log('kompletuje listę zaległych rzeczy do zrobienia od czasu '.date('d.m.Y H:m:s',$timestamp), 'info');
+        foreach($this->schedule as &$task) 
+        {
+            if($task['timestamp'] >= $timestamp && $task['timestamp'] <= time())
             {
                 array_push($todo, $task);
+                unset($task);
             }
         }
         $this->execute($todo);
         */
+        foreach($this->schedule as $key => $task) {
+            if($task['timestamp'] <= time()) //jeżeli zadanie ma czas wykonania z przeszłości - miało już się zdarzyć
+                if($this->execute($task)){ //spróbuj wykonać zadanie, jesli się uda wykonaj zawartość ifa
+                    unset($this->schedule[$key]);
+                    $this->schedule = array_values($this->schedule);
+                }
+                else {
+                    $this->log("Nie udało sie wykonać zadania z timestamp: ".$task['timestamp'], "error");
+                }
+        }
     }
-    foreach($this->schedule as $key => $task) {
-        if($task['timestamp'] <= time()) //jeżeli zadanie ma czas wykonania z przeszłości - miało już się zdarzyć
-            if($this->execute($task)){ //spróbuj wykonać zadanie, jesli się uda wykonaj zawartość ifa
-                unset($this->schedule[$key]);
-                $this->schedule = array_values($this->schedule);
-            }
-            else {
-                $this->log("Nie udało sie wykonać zadania z timestamp: ".$task['timestamp'], "error");
-
-            }
-        
 
     public function execute($task)
     {
         /*
-        if(count($tasklist) >0)
+        if(count($taskList) > 0)
             $this->log('wykonuje listę zadań', 'info');
-        foreach($tasklist as $task)
+        foreach($taskList as $task) 
         {
-            if($task['class'] == 'Village')
+            if($task['class'] == 'Village') 
             {
                 //przetwarzanie zadań dla wioski
                 $className = $task['class'];
-                $funtionName = $task['funtion'];
+                $functionName = $task['function'];
                 $param = $task['param'];
-                $this->gm->v->{$funtionName}($param);
-                $this->log("wywołuje funkcję $funtionName dla klasy $className z parametrem $param", 'info');
+                $this->gm->v->{$functionName}($param);
+                $this->log("wywołuje funkcję $functionName dla klasy $className z parametrem $param", 'info');
                 $this->gm->v->gain($task['timestamp'] - $this->gm->t);
-                $this->log("synchronizuje surowce w wiosce", 'info');
+                $this->log("synchronizuje surowce w wiosce",'info');
                 $this->gm->t = $task['timestamp'];
-                $this->log("synchronizuje czas gry do czasu ukonczenia zadania", 'info');
-           }
+                $this->log("synchronizuje czas gry do czasu ukonczneia zadania", 'info');
+            }
         }
         */
         if($task['class'] == 'Village') 
@@ -105,7 +105,5 @@ class Scheduler
     {
         $this->gm->l->log($message, 'scheduler', $type);
     }
-
-
 }
 ?>
