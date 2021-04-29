@@ -19,56 +19,32 @@ require_once('./class/GameManager.class.php');
             {
                 case 'upgradeBuilding':
                     $v->upgradeBuilding($_REQUEST['building']);
+                    require('view/townHall.php');
                 break;
-                case 'townHall':
-                    $buildingList = $v ->buildingList();
-                  $mainContent = "<table class=\"table table-bordered\">";
-                  $mainContent .= "<tr><th>Nazwa budynku</th><th>Poziom budynku</th>
-                                <th>Produkcja/h / pojemność</th><th>Koszt ulepszenia</th><th>Rozbudowa</th></tr>";
-                        foreach($buildingList as $index => $building) 
-                        {
-                            $name = $building['buildingName'];
-                            $level = $building['buildingLVL'];
-                            $upgradeCost = "";
-                            foreach($building['upgradeCost'] as $resource => $cost)
-                            {
-                                $upgradeCost .= "$resource: $cost,";
-                            }
-                            $mainContent .="<tr><td>$name</td><td>$level</td>";
-                            if(isset($building['capacity']))
-                            {
-                                $gain = $building['HourGain'];
-                                $cap = $building['capacity'];
-                                $mainContent .="<td>$gain / $cap</td>";
-                            }
-                            else 
-                            {
-                                $mainContent .="<td></td>";
-                            }
-                            $mainContent .="<td>$upgradeCost</td>";
-                            if($v->checkBuildingUpgrade($name))
-                            $mainContent .= 
-                            "<td><a href=\"index.php?action=upgradeBuilding&building=$name\">
-                            <button>Rozbuduj</button>
-                            </a></td>";
-                            else
-                             $mainContent .= "<td></td>";
-                        $mainContent .="</tr>";
-                    }
-                  $mainContent .= "</table>";
-                    $mainContent .= "<h3>Aktywne budowy:</h3>";
-                    $tasks = $gm->s->getTasksByFunction("scheduledBuildingUpgrade"); //znajdz na liscie zadan wszystie dotyczace rozbudoqwy budynków
-                    foreach($tasks as $task)
+                case 'newUnit':
+                    if(isset($_REQUEST['spearmen'])) //kliknelismy wyszkol przy włócznikach
                     {
-                        $buildingName = $task['param'];
-                        $scheduledTime = $task['timestamp'];
-                        $mainContent .= "<p>Budynek $buildingName będzie gotowy ".date('d.m.Y H:i:s', $scheduledTime)."</p>";
+                        $count = $_REQUEST['spearmen']; //ilość nowych włóczników
+                        $gm->newArmy($count, 0, 0, $v); //tworz nowy oddział włóczników w wiosce w ilości $count;
                     }
+                    if(isset($_REQUEST['archer'])) 
+                    {
+                        $count = $_REQUEST['archer']; 
+                        $gm->newArmy(0, $count, 0, $v);
 
-
-                  $mainContent .= "</table>";
-                  $mainContent .= "<a href=index.php>Powrót</a>";
+                        if(isset($_REQUEST['cavalry'])) 
+                        {
+                            $count = $_REQUEST['cavalry']; 
+                            $gm->newArmy(0, 0, $count , $v);
+                        }
+                        require('view/townSquare.php');
+                        break;
+                case 'townHall':
+                    require('view/townHall.php');
                   break;
+                  case 'townSquare':
+                    require('view/townSquare.php');
+                    break;
                 default:
                     $gm->l->log("Nieprawidłowa zmienna \"action\"", "controller", "error");
             }
@@ -109,7 +85,14 @@ require_once('./class/GameManager.class.php');
             Widok wioski
             <?php endif; ?>
             <br>
-            <a href="index.php?action=townHall">Ratusz</a>
+            <ul style="list-style-type: none; padding:0;">
+            <li>
+                    <a href="index.php?action=townHall">Ratusz</a>
+            </li> 
+             <li>
+                      <a href="index.php?action=townSquare">Plac</a>
+            </li> 
+            <ul>
             </div>
             <div>
             Lista wojska
